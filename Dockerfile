@@ -42,13 +42,21 @@ RUN opam init -y --disable-sandboxing && \
 WORKDIR "/usr/local/share/geneweb/.opam/$OPAM_VERSION/.opam-switch/build"
 RUN git clone https://github.com/geneweb/geneweb geneweb
 
-#compiles to here ^^^^
 
 WORKDIR "/usr/local/share/geneweb/.opam/$OPAM_VERSION/.opam-switch/build/geneweb"
 RUN eval $(opam env) && ocaml ./configure.ml --api && make clean distrib
 
+#compiles to here ^^^^
+RUN rm -rf /usr/local/share/geneweb/share/dist && mv distribution /usr/local/share/geneweb/share/dist
 
-# RUN opam init
-# RUN eval $(opam env)
-# RUN opam install ocaml-base-compiler camlp5 cppo dune.1.11.4 markup stdlib-shims num zarith uucp unidecode
+WORKDIR /usr/local/share/geneweb
+RUN mv share/dist/bases share/data
+ADD gwsetup_only etc/gwsetup_only
+ADD geneweb-launch.sh bin/geneweb-launch.sh
+ADD redis.conf /etc/redis.conf
 
+USER root
+ENTRYPOINT bin/geneweb-launch.sh >/dev/null 2>&1
+
+EXPOSE 2316-2317
+EXPOSE 2322
