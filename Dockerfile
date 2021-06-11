@@ -6,7 +6,7 @@ ENV OPAM_VERSION="4.11.1"
 # update all the things and install requirements
 RUN export DEBIAN_FRONTEND=noninteractive && \
     apt-get update -q && \
-    apt-get install -y-q curl wget make m4 pkg-config unzip git bubblewrap gcc libgmp-dev
+    apt-get install -yq curl wget make m4 pkg-config unzip git bubblewrap gcc libgmp-dev
 
 RUN wget https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh && chmod +x install.sh && yes "" | sh ./install.sh
 
