@@ -1,4 +1,4 @@
-FROM amd64:stable-slim
+FROM debian:stable
 LABEL maintainer="MDHMatt <dev@mdhosting.co.uk>"
 
 ENV OPAM_VERSION="4.11.1"
@@ -10,7 +10,7 @@ RUN set -eux; \
     apt-get install -yq --no-install-recommends \
       apt-transport-https ca-certificates less nano \
       tzdata libatomic1 vim wget libncurses5-dev \
-      build-essential coreutils curl make m4 unzip gcc \
+      build-essential linux-headers-generic coreutils curl make m4 unzip gcc \
       pkg-config libgmp-dev libperl-dev libipc-system-simple-perl \
       libstring-shellquote-perl git subversion mercurial rsync \
       libcurl4-openssl-dev musl-dev redis protobuf-compiler opam rsyslog \
