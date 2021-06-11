@@ -6,7 +6,7 @@ ENV OPAM_VERSION="4.11.1"
 # update all the things and install requirements
 RUN export DEBIAN_FRONTEND=noninteractive && \
     apt-get update -q && \
-    apt-get install -yq curl wget make m4 pkg-config unzip git bubblewrap gcc libgmp-dev
+    apt-get install -yq curl wget rsync hg darcs make m4 pkg-config unzip git bubblewrap gcc libgmp-dev
 
 RUN wget https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh && chmod +x install.sh && yes "" | sh ./install.sh
 
@@ -14,7 +14,7 @@ RUN wget https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh &&
 RUN opam init -y --disable-sandboxing && \
     eval $(opam env) && opam update -a -y && \
     eval $(opam env) && opam upgrade -a -y && \
-    opam install camlp5 cppo dune.1.11.4 markup stdlib-shims num zarith uucp unidecode
+    opam install --unlock-base camlp5 cppo dune markup stdlib-shims num zarith uucp unidecode
 
 # Remove MOTD
 # RUN rm -rf /etc/update-motd.d /etc/motd /etc/motd.dynamic \
