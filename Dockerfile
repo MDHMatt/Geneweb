@@ -24,8 +24,6 @@ RUN mkdir -p /usr/local/share/geneweb
 RUN adduser --system --group --home /usr/local/share/geneweb --shell /bin/bash geneweb
 RUN chown -R geneweb:geneweb /usr/local/share/geneweb
 
-#compiles to here
-
 USER geneweb:geneweb
 WORKDIR /usr/local/share/geneweb
 RUN mkdir etc bin log tmp && \
@@ -37,9 +35,19 @@ RUN opam init -y --disable-sandboxing && \
  eval $(opam env) && opam update -a -y && \
  eval $(opam env) && opam upgrade -a -y && \
  eval $(opam env) && opam switch create "$OPAM_VERSION" && \
- eval $(opam env) && opam install -y --unlock-base camlp5.7.13 cppo dune jingoo markup ounit uucp uunf unidecode ocurl piqi piqilib redis redis-sync yojson calendars syslog
+ eval $(opam env) && opam install -y --unlock-base camlp5 cppo dune jingoo markup ounit uucp uunf unidecode ocurl piqi piqilib redis redis-sync yojson calendars syslog && \
+ eval $(opam env)
+
  
- 
+WORKDIR "/usr/local/share/geneweb/.opam/$OPAM_VERSION/.opam-switch/build"
+RUN git clone https://github.com/geneweb/geneweb geneweb
+
+#compiles to here ^^^^
+
+WORKDIR "/usr/local/share/geneweb/.opam/$OPAM_VERSION/.opam-switch/build/geneweb"
+RUN eval $(opam env) && ocaml ./configure.ml --api && make clean distrib
+
+
 # RUN opam init
 # RUN eval $(opam env)
 # RUN opam install ocaml-base-compiler camlp5 cppo dune.1.11.4 markup stdlib-shims num zarith uucp unidecode
