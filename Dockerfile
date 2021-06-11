@@ -1,4 +1,4 @@
-FROM arm64v8/debian:stable-slim
+FROM debian:stable-slim
 LABEL maintainer="Jonny Rimkus <jonny@rimkus.it>"
 
 ENV OPAM_VERSION="4.11.1"
