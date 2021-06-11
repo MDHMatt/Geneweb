@@ -29,7 +29,7 @@ RUN chown -R geneweb:geneweb /usr/local/share/geneweb
 USER geneweb:geneweb
 WORKDIR /usr/local/share/geneweb
 RUN mkdir etc bin log tmp && \
-    mkdir -p share/redis && \
+    mkdir -p share/redis
     
 ENV OPAM_VERSION="4.11.1"
 
