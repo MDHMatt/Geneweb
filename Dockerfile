@@ -17,7 +17,7 @@ RUN rm -rf /etc/update-motd.d /etc/motd /etc/motd.dynamic \
 
 RUN wget https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh
 RUN chmod +x install.sh
-run ./install.sh
+RUN ./install.sh
 RUN opam init
 RUN eval $(opam env)
 RUN opam install camlp5 cppo dune.1.11.4 markup stdlib-shims num zarith uucp unidecode
