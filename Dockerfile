@@ -1,5 +1,5 @@
 FROM debian:stable-slim
-LABEL maintainer="Jonny Rimkus <jonny@rimkus.it>"
+LABEL maintainer="MDHMatt <dev@mdhosting.co.uk>"
 
 ENV OPAM_VERSION="4.11.1"
 
@@ -10,7 +10,7 @@ RUN set -eux; \
     apt-get install -yq --no-install-recommends \
       apt-transport-https ca-certificates less nano \
       tzdata libatomic1 vim wget libncurses5-dev \
-      build-essential linux-headers-arm64 coreutils curl make m4 unzip gcc \
+      build-essential linux-headers-arm64-cross coreutils curl make m4 unzip gcc \
       pkg-config libgmp-dev libperl-dev libipc-system-simple-perl \
       libstring-shellquote-perl git subversion mercurial rsync \
       libcurl4-openssl-dev musl-dev redis protobuf-compiler opam rsyslog \
