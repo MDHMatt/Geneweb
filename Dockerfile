@@ -15,12 +15,14 @@ RUN apt-get clean \
 RUN rm -rf /etc/update-motd.d /etc/motd /etc/motd.dynamic \
     && ln -fs /dev/null /run/motd.dynamic
 
-RUN wget https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh
-RUN chmod +x install.sh
-RUN ./install.sh
-RUN opam init
-RUN eval $(opam env)
-RUN opam install camlp5 cppo dune.1.11.4 markup stdlib-shims num zarith uucp unidecode
+RUN yes "" | sh <(curl -sL https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh)
 
-RUN adduser --system --group --home /usr/local/share/geneweb --shell /bin/bash geneweb
-RUN chown -R geneweb:geneweb /usr/local/share/geneweb
+# RUN wget https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh
+# RUN chmod +x install.sh
+# RUN ./install.sh
+# RUN opam init
+# RUN eval $(opam env)
+# RUN opam install camlp5 cppo dune.1.11.4 markup stdlib-shims num zarith uucp unidecode
+
+# RUN adduser --system --group --home /usr/local/share/geneweb --shell /bin/bash geneweb
+# RUN chown -R geneweb:geneweb /usr/local/share/geneweb
