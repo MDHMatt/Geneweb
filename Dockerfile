@@ -1,4 +1,4 @@
-FROM debian:stable-slim
+FROM amd64:stable-slim
 LABEL maintainer="MDHMatt <dev@mdhosting.co.uk>"
 
 ENV OPAM_VERSION="4.11.1"
