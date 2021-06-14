@@ -16,7 +16,7 @@ RUN wget https://github.com/MDHMatt/Geneweb/raw/main/geneweb.7z && 7z x geneweb.
 RUN cd /home/geneweb/geneweb
 
 # Run application
-RUN sh ./gwsetup
+#RUN sh ./home/geneweb/geneweb/gwsetup
 
 
 #ENTRYPOINT bin/geneweb-launch.sh >/dev/null 2>&1
