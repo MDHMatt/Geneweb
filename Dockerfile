@@ -1,4 +1,4 @@
-FROM debian:stable
+FROM debian:slim-stable
 LABEL maintainer="MDHMatt <dev@mdhosting.co.uk>"
 
 # Install required packages
@@ -43,6 +43,7 @@ RUN git clone https://github.com/geneweb/geneweb geneweb
 WORKDIR "/usr/local/share/geneweb/.opam/$OPAM_VERSION/.opam-switch/build/geneweb"
 RUN eval $(opam env) && ocaml ./configure.ml --api && make clean distrib
 
+USER root
 RUN cp -r distribution /tmp/geneweb && cd /tmp/ && \
     tar -czvf geneweb.tar.gz /tmp/geneweb
 
@@ -57,5 +58,5 @@ RUN cp -r distribution /tmp/geneweb && cd /tmp/ && \
 #USER root
 #ENTRYPOINT bin/geneweb-launch.sh >/dev/null 2>&1
 
-EXPOSE 2316-2317
-EXPOSE 2322
+#EXPOSE 2316-2317
+#EXPOSE 2322
