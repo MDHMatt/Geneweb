@@ -2,7 +2,7 @@ FROM alpine:latest
 LABEL maintainer="MDHMatt <dev@mdhosting.co.uk>"
 
 # Install required packages
-RUN apk update && apk add wget p7zip nano
+RUN apk update && apk add wget p7zip nano bash
 
 # Create a group and user
 RUN addgroup -S geneweb && adduser -S geneweb -G geneweb
