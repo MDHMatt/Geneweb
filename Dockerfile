@@ -1,62 +1,18 @@
-FROM debian:stable-slim
+FROM alpine:latest
 LABEL maintainer="MDHMatt <dev@mdhosting.co.uk>"
 
 # Install required packages
-RUN set -eux; \
-    export DEBIAN_FRONTEND=noninteractive && \
-    apt-get update -qq && \
-    apt-get install -yq --no-install-recommends \
-      apt-transport-https ca-certificates less nano tzdata libatomic1 vim wget libncurses5-dev build-essential coreutils curl make m4 unzip bubblewrap gcc libgmp-dev \
-      pkg-config libgmp-dev libperl-dev libipc-system-simple-perl libstring-shellquote-perl git subversion mercurial rsync libcurl4-openssl-dev musl-dev \
-      redis protobuf-compiler opam rsyslog
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN apk update && apk add wget p7zip
+RUN wget https://github.com/MDHMatt/Geneweb/raw/main/geneweb.7z && \
+    7z u geneweb.7z && cd geneweb
 
-# Remove MOTD
-RUN rm -rf /etc/update-motd.d /etc/motd /etc/motd.dynamic && \
-    ln -fs /dev/null /run/motd.dynamic
+RUN sh ./gwsetup
 
-RUN wget https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh && chmod +x install.sh && yes "" | sh ./install.sh
 
-RUN rm -rf /usr/local/share/geneweb && \
-    mkdir -p /usr/local/share/geneweb && \
-    adduser --system --group --home /usr/local/share/geneweb --shell /bin/bash geneweb && \
-    chown -R geneweb:geneweb /usr/local/share/geneweb
 
-USER geneweb:geneweb
-WORKDIR /usr/local/share/geneweb
-RUN mkdir etc bin log tmp && \
-    mkdir -p share/redis
-    
-ENV OPAM_VERSION="4.11.1"
-
-RUN opam init -y --disable-sandboxing && \
- eval $(opam env) && opam update -a -y && \
- eval $(opam env) && opam upgrade -a -y && \
- eval $(opam env) && opam switch create "$OPAM_VERSION" && \
- eval $(opam env) && opam install -y --unlock-base camlp5 cppo dune jingoo markup ounit uucp uunf unidecode ocurl piqi piqilib redis redis-sync yojson calendars syslog && \
- eval $(opam env)
-
- 
-WORKDIR "/usr/local/share/geneweb/.opam/$OPAM_VERSION/.opam-switch/build"
-RUN git clone https://github.com/geneweb/geneweb geneweb
-
-WORKDIR "/usr/local/share/geneweb/.opam/$OPAM_VERSION/.opam-switch/build/geneweb"
-RUN eval $(opam env) && ocaml ./configure.ml --api && make clean distrib
-
-USER root
-RUN cp -r distribution /tmp/geneweb && cd /tmp/ && \
-    tar -czvf geneweb.tar.gz /tmp/geneweb
-
-#compiles to here ^^^^
-
-#WORKDIR /usr/local/share/geneweb
-#RUN mv share/dist/bases share/data
-#ADD gwsetup_only etc/gwsetup_only
-#ADD geneweb-launch.sh bin/geneweb-launch.sh
-#ADD redis.conf /etc/redis.conf
 
 #USER root
 #ENTRYPOINT bin/geneweb-launch.sh >/dev/null 2>&1
 
-#EXPOSE 2316-2317
-#EXPOSE 2322
+EXPOSE 2316-2317
+EXPOSE 2322
