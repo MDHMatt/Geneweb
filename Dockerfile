@@ -1,4 +1,4 @@
-FROM debian:slim-stable
+FROM debian:stable-slim
 LABEL maintainer="MDHMatt <dev@mdhosting.co.uk>"
 
 # Install required packages
