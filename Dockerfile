@@ -12,7 +12,8 @@ USER geneweb
 WORKDIR /home/geneweb/
 
 # Grab files and extract
-RUN wget https://github.com/MDHMatt/Geneweb/raw/main/geneweb.7z && 7z x geneweb.7z && cd geneweb
+RUN wget https://github.com/MDHMatt/Geneweb/raw/main/geneweb.7z && 7z x geneweb.7z
+RUN cd /home/geneweb/geneweb
 
 # Run application
 RUN sh ./gwsetup
