@@ -6,8 +6,10 @@ ADD https://github.com/MDHMatt/Geneweb/raw/main/geneweb.7z /home/geneweb/
 # Install required packages
 RUN set -eux; \
     export DEBIAN_FRONTEND=noninteractive && \
-    apt-get update -qq && apt-get install -yq wget tzdata p7zip-full && apt-get upgrade -yq
-
+    apt-get update -qq && apt-get upgrade -yq && apt-get install -yq apt-transport-https ca-certificates less nano tzdata p7zip-full libatomic1 vim wget \
+    libncurses5-dev wget tzdata p7zip-full pkg-config libgmp-dev libperl-dev libipc-system-simple-perl libstring-shellquote-perl git \
+    subversion mercurial rsync libcurl4-openssl-dev musl-dev redis protobuf-compiler opam rsyslog
+    
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Remove MOTD
