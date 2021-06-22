@@ -4,7 +4,7 @@ LABEL maintainer="MDHMatt <dev@mdhosting.co.uk>"
 # Install required packages
 #RUN set -eux; \
 #    export DEBIAN_FRONTEND=noninteractive && \
-RUN    apt-get update -qq && apt-get install p7zip && apt-get upgrade -y
+RUN    apt-get update -qq && apt-get install wget p7zip && apt-get upgrade -y
 #    apt-get install -yq --no-install-recommends \
 #      apt-transport-https ca-certificates less nano tzdata libatomic1 vim wget libncurses5-dev build-essential coreutils curl make m4 unzip bubblewrap gcc libgmp-dev \
 #      pkg-config libgmp-dev libperl-dev libipc-system-simple-perl libstring-shellquote-perl git subversion mercurial rsync libcurl4-openssl-dev musl-dev \
@@ -26,3 +26,6 @@ RUN adduser --system --group --home /home/geneweb --shell /bin/bash geneweb
 RUN chown -R geneweb:geneweb /home/geneweb
 USER geneweb:geneweb
 RUN cd /tmp/ && wget https://github.com/MDHMatt/Geneweb/raw/main/geneweb.7z && 7z x /home/geneweb/geneweb.7z
+
+EXPOSE 2316-2317
+EXPOSE 2322
