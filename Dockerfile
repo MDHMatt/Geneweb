@@ -22,11 +22,13 @@ RUN rm -rf /usr/local/share/geneweb && \
     adduser --system --group --home /usr/local/share/geneweb --shell /bin/bash geneweb && \
     chown -R geneweb:geneweb /usr/local/share/geneweb
 
+# create user
 USER geneweb:geneweb
 WORKDIR /usr/local/share/geneweb
 RUN mkdir etc bin log tmp && \
     mkdir -p share/redis
-    
+
+# Setup build enviroment
 ENV OPAM_VERSION="4.11.1"
 
 RUN opam init -y --disable-sandboxing && \
@@ -36,18 +38,23 @@ RUN opam init -y --disable-sandboxing && \
  eval $(opam env) && opam install -y --unlock-base camlp5 cppo dune jingoo markup ounit uucp uunf unidecode ocurl piqi piqilib redis redis-sync yojson calendars syslog && \
  eval $(opam env)
 
- 
+# Grab latest version of geneweb git files
 WORKDIR "/usr/local/share/geneweb/.opam/$OPAM_VERSION/.opam-switch/build"
 RUN git clone https://github.com/geneweb/geneweb geneweb
 
+# Configure and build
 WORKDIR "/usr/local/share/geneweb/.opam/$OPAM_VERSION/.opam-switch/build/geneweb"
 RUN eval $(opam env) && ocaml ./configure.ml --api && make clean distrib
 
+# Switch to root and copy built distrobution files to tmp for archive
 USER root
 RUN cp -r distribution /tmp/geneweb && cd /tmp/ && tar -czvf geneweb.tar.gz /tmp/geneweb
 
+# make temp git holding folder
+RUN mkdir gitpush && cd /tmp/gitpush
 #compiles to here ^^^^
-RUN mkdir /tmp/gitpush && cd gitpush
+
+# Grab git files and move archive into git and push to git
 RUN git clone https://github.com/MDHMatt/Geneweb.git && cd Geneweb && mv /tmp/geneweb/geneweb.tar.gz /tmp/gitpush/Geneweb/geneweb.tar.gz
 RUN git add /tmp/gitpush/Geneweb/geneweb.tar.gz
 RUN git commit -m "Updated build files"
