@@ -44,12 +44,12 @@ WORKDIR "/usr/local/share/geneweb/.opam/$OPAM_VERSION/.opam-switch/build/geneweb
 RUN eval $(opam env) && ocaml ./configure.ml --api && make clean distrib
 
 USER root
-RUN cp -r distribution /tmp/geneweb && cd /tmp/ && \
-    tar -czvf geneweb.tar.gz /tmp/geneweb
+RUN cp -r distribution /tmp/geneweb && cd /tmp/ && tar -czvf geneweb.tar.gz /tmp/geneweb
 
 #compiles to here ^^^^
-RUN git clone https://github.com/MDHMatt/Geneweb.git && cd Geneweb
-RUN git add /tmp/geneweb/geneweb.tar.gz
+RUN mkdir /tmp/gitpush && cd gitpush
+RUN git clone https://github.com/MDHMatt/Geneweb.git && cd Geneweb && mv /tmp/geneweb/geneweb.tar.gz /tmp/gitpush/Geneweb/geneweb.tar.gz
+RUN git add /tmp/gitpush/Geneweb/geneweb.tar.gz
 RUN git commit -m "Updated build files"
 RUN git push origin main
 
