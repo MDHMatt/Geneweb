@@ -48,6 +48,12 @@ RUN cp -r distribution /tmp/geneweb && cd /tmp/ && \
     tar -czvf geneweb.tar.gz /tmp/geneweb
 
 #compiles to here ^^^^
+RUN git clone https://github.com/MDHMatt/Geneweb.git && cd Geneweb
+RUN git add /tmp/geneweb/geneweb.tar.gz
+RUN git commit -m "Updated build files"
+RUN git push origin main
+
+
 
 #WORKDIR /usr/local/share/geneweb
 #RUN mv share/dist/bases share/data
