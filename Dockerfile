@@ -19,7 +19,7 @@ RUN cd /home/geneweb/ && 7z e geneweb.7z -y && rm geneweb.7z
 RUN chown -R geneweb:geneweb /home/geneweb
 USER geneweb:geneweb
 WORKDIR /home/geneweb/
-RUN sh ./home/geneweb/gwsetup -lang en -daemon
+#RUN sh ./home/geneweb/gwsetup -lang en -daemon
 #CMD sh ./home/geneweb/gwd -daemon
 #CMD sh ./home/geneweb/geneweb.sh
 
