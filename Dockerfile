@@ -25,7 +25,8 @@ RUN rm -rf /etc/update-motd.d /etc/motd /etc/motd.dynamic && ln -fs /dev/null /r
 RUN adduser --system --group --home /home/geneweb --shell /bin/bash geneweb
 RUN chown -R geneweb:geneweb /home/geneweb
 USER geneweb:geneweb
-RUN cd /tmp/ && wget https://github.com/MDHMatt/Geneweb/raw/main/geneweb.7z && 7z x /home/geneweb/geneweb.7z
+RUN cd /tmp/ && wget https://github.com/MDHMatt/Geneweb/raw/main/geneweb.7z
+RUN 7z e /home/geneweb/geneweb.7z
 #RUN sh ./home/geneweb/geneweb/gwsetup -lang en -daemon
 
 EXPOSE 2316-2317
