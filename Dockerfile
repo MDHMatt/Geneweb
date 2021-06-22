@@ -1,6 +1,6 @@
 FROM debian:stable-slim
 LABEL maintainer="MDHMatt <dev@mdhosting.co.uk>"
-
+COPY --from=MDHMatt/Geneweb:testing /tmp /tmp
 # Install required packages
 RUN set -eux; \
     export DEBIAN_FRONTEND=noninteractive && \
@@ -23,11 +23,13 @@ RUN rm -rf /etc/update-motd.d /etc/motd /etc/motd.dynamic && ln -fs /dev/null /r
 # RUN opam install camlp5 cppo dune.1.11.4 markup stdlib-shims num zarith uucp unidecode
 
 RUN adduser --system --group --home /home/geneweb --shell /bin/bash geneweb
-RUN chown -R geneweb:geneweb /home/geneweb
-USER geneweb:geneweb
-RUN cd /tmp/ && wget https://github.com/MDHMatt/Geneweb/raw/main/geneweb.7z && \
-    mv geneweb.7z /home/geneweb/geneweb.7z && \
+
+#RUN cd /tmp/ && wget https://github.com/MDHMatt/Geneweb/raw/main/geneweb.7z && \
+RUN cd /tmp/ && mv geneweb.7z /home/geneweb/geneweb.7z && \
     cd /home/geneweb/ && 7z e geneweb.7z -y
+
+RUN chown -R geneweb:geneweb /home/geneweb
+USER geneweb:geneweb    
 #RUN sh ./home/geneweb/geneweb/gwsetup -lang en -daemon
 
 EXPOSE 2316-2317
