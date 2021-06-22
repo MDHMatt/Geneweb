@@ -55,10 +55,11 @@ RUN mkdir gitpush && cd gitpush
 #compiles to here ^^^^
 
 # Grab git files and move archive into git and push to git
-RUN git clone https://github.com/MDHMatt/Geneweb.git && cd Geneweb && mv /tmp/geneweb.tar.gz /tmp/gitpush/Geneweb/geneweb.tar.gz
-RUN git add /tmp/gitpush/Geneweb/geneweb.tar.gz
-RUN git commit -m "Updated build files"
-RUN git push origin main
+#RUN git clone https://github.com/MDHMatt/Geneweb.git && cd Geneweb && \
+#    mv /tmp/geneweb.tar.gz /tmp/gitpush/Geneweb/geneweb.tar.gz && \
+#    git add /tmp/gitpush/Geneweb/geneweb.tar.gz && \
+#    git commit -m "Updated build files" && \
+#    git push origin main
 
 
 
