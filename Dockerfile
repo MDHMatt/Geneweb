@@ -18,7 +18,6 @@ RUN cd /home/geneweb/ && wget https://github.com/MDHMatt/Geneweb/raw/main/genewe
 
 RUN chown -R geneweb:geneweb /home/geneweb
 USER geneweb:geneweb
-WORKDIR /home/geneweb/
 RUN wget https://github.com/MDHMatt/Geneweb/blob/c8901ca2abe2f2d3d38dfb9fbf16ec61c425c44c/geneweb.sh && chmod +x geneweb.sh
 
 #RUN sh ./home/geneweb/gwsetup -lang en -daemon
