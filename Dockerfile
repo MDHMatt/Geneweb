@@ -51,7 +51,7 @@ USER root
 RUN cp -r distribution /tmp/geneweb && cd /tmp/ && tar -czvf geneweb.tar.gz /tmp/geneweb
 
 # make temp git holding folder
-RUN mkdir gitpush && cd /tmp/gitpush
+RUN mkdir gitpush && cd gitpush && ls -sl
 #compiles to here ^^^^
 
 # Grab git files and move archive into git and push to git
