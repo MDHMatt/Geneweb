@@ -13,7 +13,10 @@ RUN set -eux; \
 RUN rm -rf /etc/update-motd.d /etc/motd /etc/motd.dynamic && ln -fs /dev/null /run/motd.dynamic
 
 #RUN useradd geneweb &&
-RUN mkdir /genweb && cd /geneweb/ && wget https://github.com/MDHMatt/Geneweb/raw/main/geneweb.7z && 7z x geneweb.7z -y && rm geneweb.7z && ls -slh
+
+RUN mkdir /genweb
+VOLUME [/genweb]
+RUN cd geneweb && wget https://github.com/MDHMatt/Geneweb/raw/main/geneweb.7z && 7z x geneweb.7z -y && rm geneweb.7z && ls -slh
 
 #RUN chown -R geneweb:geneweb /home/geneweb
 #USER geneweb:geneweb
@@ -22,7 +25,8 @@ RUN wget https://github.com/MDHMatt/Geneweb/blob/c8901ca2abe2f2d3d38dfb9fbf16ec6
 #RUN sh ./home/geneweb/gwsetup -lang en -daemon
 #CMD sh ./home/geneweb/gwd -daemon
 #CMD sh ./home/geneweb/geneweb.sh
-CMD [./genweb.sh]
+
 
 EXPOSE 2316-2317
 EXPOSE 2322
+CMD [./genweb.sh]
