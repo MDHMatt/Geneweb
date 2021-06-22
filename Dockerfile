@@ -14,12 +14,12 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 RUN rm -rf /etc/update-motd.d /etc/motd /etc/motd.dynamic && ln -fs /dev/null /run/motd.dynamic
 
 RUN adduser --system --group --home /home/geneweb --shell /bin/bash geneweb
-RUN cd /home/geneweb/ && wget https://github.com/MDHMatt/Geneweb/raw/main/geneweb.7z && 7z x geneweb.7z -y && rm geneweb.7z
+RUN cd /home/geneweb/ && wget https://github.com/MDHMatt/Geneweb/raw/main/geneweb.7z && 7z x geneweb.7z -y && rm geneweb.7z && ls -slh
 
 RUN chown -R geneweb:geneweb /home/geneweb
 USER geneweb:geneweb
 WORKDIR /home/geneweb/
-RUN wget https://github.com/MDHMatt/Geneweb/blob/c8901ca2abe2f2d3d38dfb9fbf16ec61c425c44c/geneweb.sh && chmod +x geneweb
+RUN wget https://github.com/MDHMatt/Geneweb/blob/c8901ca2abe2f2d3d38dfb9fbf16ec61c425c44c/geneweb.sh && chmod +x geneweb.sh
 
 #RUN sh ./home/geneweb/gwsetup -lang en -daemon
 #CMD sh ./home/geneweb/gwd -daemon
