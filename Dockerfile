@@ -48,10 +48,10 @@ RUN eval $(opam env) && ocaml ./configure.ml --api && make clean distrib
 
 # Switch to root and copy built distrobution files to tmp for archive
 USER root
-RUN cp -r distribution /tmp/geneweb && cd /tmp/ && tar -czvf geneweb.tar.gz /tmp/geneweb
+RUN cp -r distribution /tmp/geneweb && cd /tmp/ && tar -czvf geneweb.tar.gz /tmp/geneweb  && ls -sl
 
 # make temp git holding folder
-RUN mkdir gitpush && cd gitpush && ls -sl
+RUN mkdir gitpush && cd gitpush
 #compiles to here ^^^^
 
 # Grab git files and move archive into git and push to git
