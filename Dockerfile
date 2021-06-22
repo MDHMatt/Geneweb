@@ -6,7 +6,7 @@ RUN set -eux; \
     export DEBIAN_FRONTEND=noninteractive && \
     apt-get update -qq && \
     apt-get install -yq --no-install-recommends \
-      apt-transport-https ca-certificates less nano tzdata libatomic1 vim wget libncurses5-dev build-essential coreutils curl make m4 unzip bubblewrap gcc libgmp-dev \
+      apt-transport-https ca-certificates less nano tzdata p7zip-full libatomic1 vim wget libncurses5-dev build-essential coreutils curl make m4 unzip bubblewrap gcc libgmp-dev \
       pkg-config libgmp-dev libperl-dev libipc-system-simple-perl libstring-shellquote-perl git subversion mercurial rsync libcurl4-openssl-dev musl-dev \
       redis protobuf-compiler opam rsyslog
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
@@ -48,21 +48,8 @@ RUN eval $(opam env) && ocaml ./configure.ml --api && make clean distrib
 
 # Switch to root and copy built distrobution files to tmp for archive
 USER root
-RUN cp -r distribution /tmp/geneweb && cd /tmp/ && tar -czvf geneweb.tar.gz /tmp/geneweb  && ls -sl
-
-WORKDIR "/tmp/"
-# make temp git holding folder
-#RUN mkdir gitpush && cd gitpush
-#compiles to here ^^^^
-
-# Grab git files and move archive into git and push to git
-#RUN git clone https://github.com/MDHMatt/Geneweb.git && cd Geneweb && \
-#    mv /tmp/geneweb.tar.gz /tmp/gitpush/Geneweb/geneweb.tar.gz && \
-#    git add /tmp/gitpush/Geneweb/geneweb.tar.gz && \
-#    git commit -m "Updated build files" && \
-#    git push origin main
-
-
+RUN 7z a /home/geneweb.7z  /usr/local/share/geneweb/.opam/$OPAM_VERSION/.opam-switch/build/geneweb/distribution/*
+#RUN cp -r distribution /tmp/geneweb && cd /tmp/ && tar -czvf geneweb.tar.gz /tmp/geneweb  && ls -sl
 
 #WORKDIR /usr/local/share/geneweb
 #RUN mv share/dist/bases share/data
@@ -72,6 +59,3 @@ WORKDIR "/tmp/"
 
 #USER root
 #ENTRYPOINT bin/geneweb-launch.sh >/dev/null 2>&1
-
-#EXPOSE 2316-2317
-#EXPOSE 2322
