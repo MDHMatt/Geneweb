@@ -1,10 +1,17 @@
-FROM debian:stable-slim
+FROM MDHMatt/Geneweb:Testing AS build
 LABEL maintainer="MDHMatt <dev@mdhosting.co.uk>"
-COPY --from=MDHMatt/Geneweb:testing /tmp /tmp
+WORKDIR /tmp
+COPY geneweb.tar.gz /tmp/
+
+FROM debian:stable-slim
+WORKDIR /tmp/
+COPY --from=build /tmp/geneweb.tar.gz .
+
+
 # Install required packages
 RUN set -eux; \
     export DEBIAN_FRONTEND=noninteractive && \
-    apt-get update -qq && apt-get install -yq wget p7zip-full && apt-get upgrade -yq
+    apt-get update -qq && apt-get install -yq wget tzdata p7zip-full && apt-get upgrade -yq
 #    apt-get install -yq --no-install-recommends \
 #      apt-transport-https ca-certificates less nano tzdata libatomic1 vim wget libncurses5-dev build-essential coreutils curl make m4 unzip bubblewrap gcc libgmp-dev \
 #      pkg-config libgmp-dev libperl-dev libipc-system-simple-perl libstring-shellquote-perl git subversion mercurial rsync libcurl4-openssl-dev musl-dev \
@@ -25,12 +32,14 @@ RUN rm -rf /etc/update-motd.d /etc/motd /etc/motd.dynamic && ln -fs /dev/null /r
 RUN adduser --system --group --home /home/geneweb --shell /bin/bash geneweb
 
 #RUN cd /tmp/ && wget https://github.com/MDHMatt/Geneweb/raw/main/geneweb.7z && \
-RUN cd /tmp/ && mv geneweb.7z /home/geneweb/geneweb.7z && \
-    cd /home/geneweb/ && 7z e geneweb.7z -y
+RUN cd /tmp/ && mv geneweb.tar.gz /home/geneweb/geneweb.tar.gz && \
+    cd /home/geneweb/ && tar -xf geneweb.tar.gz
 
 RUN chown -R geneweb:geneweb /home/geneweb
 USER geneweb:geneweb    
-#RUN sh ./home/geneweb/geneweb/gwsetup -lang en -daemon
+RUN sh ./home/geneweb/gwsetup -lang en -daemon
+#CMD sh ./home/geneweb/gwd -daemon
+#CMD sh ./home/geneweb/geneweb.sh
 
 EXPOSE 2316-2317
 EXPOSE 2322
