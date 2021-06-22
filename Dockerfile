@@ -1,7 +1,5 @@
 FROM debian:stable-slim
 LABEL maintainer="MDHMatt <dev@mdhosting.co.uk>"
-RUN mkdir /home/geneweb
-ADD https://github.com/MDHMatt/Geneweb/raw/main/geneweb.7z /tmp/
 
 # Install required packages
 RUN set -eux; \
@@ -16,14 +14,16 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 RUN rm -rf /etc/update-motd.d /etc/motd /etc/motd.dynamic && ln -fs /dev/null /run/motd.dynamic
 
 RUN adduser --system --group --home /home/geneweb --shell /bin/bash geneweb
-RUN mv /tmp/geneweb.7z /home/geneweb/geneweb.7z && cd /home/geneweb/ && 7z e geneweb.7z -y && rm geneweb.7z
+RUN cd /home/geneweb/ && wget https://github.com/MDHMatt/Geneweb/raw/main/geneweb.7z && 7z x geneweb.7z -y && rm geneweb.7z
 
 RUN chown -R geneweb:geneweb /home/geneweb
 USER geneweb:geneweb
 WORKDIR /home/geneweb/
+RUN wget https://github.com/MDHMatt/Geneweb/blob/c8901ca2abe2f2d3d38dfb9fbf16ec61c425c44c/geneweb.sh && chmod +x geneweb
+
 #RUN sh ./home/geneweb/gwsetup -lang en -daemon
 #CMD sh ./home/geneweb/gwd -daemon
-#CMD sh ./home/geneweb/geneweb.sh
+CMD sh ./home/geneweb/geneweb.sh
 
 EXPOSE 2316-2317
 EXPOSE 2322
