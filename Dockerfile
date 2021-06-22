@@ -1,4 +1,4 @@
-FROM MDHMatt/Geneweb:Testing AS build
+FROM mdhmatt/geneweb:testing AS build
 LABEL maintainer="MDHMatt <dev@mdhosting.co.uk>"
 WORKDIR /tmp
 COPY geneweb.tar.gz /tmp/
