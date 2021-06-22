@@ -4,7 +4,7 @@ LABEL maintainer="MDHMatt <dev@mdhosting.co.uk>"
 # Install required packages
 RUN set -eux; \
     export DEBIAN_FRONTEND=noninteractive && \
-    apt-get update -qq && apt-get install -yq wget p7zip && apt-get upgrade -yq
+    apt-get update -qq && apt-get install -yq wget p7zip-full && apt-get upgrade -yq
 #    apt-get install -yq --no-install-recommends \
 #      apt-transport-https ca-certificates less nano tzdata libatomic1 vim wget libncurses5-dev build-essential coreutils curl make m4 unzip bubblewrap gcc libgmp-dev \
 #      pkg-config libgmp-dev libperl-dev libipc-system-simple-perl libstring-shellquote-perl git subversion mercurial rsync libcurl4-openssl-dev musl-dev \
