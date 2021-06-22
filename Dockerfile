@@ -27,7 +27,7 @@ RUN chown -R geneweb:geneweb /home/geneweb
 USER geneweb:geneweb
 RUN cd /tmp/ && wget https://github.com/MDHMatt/Geneweb/raw/main/geneweb.7z && \
     mv geneweb.7z /home/geneweb/geneweb.7z && \
-    cd /home/geneweb/ && 7z e geneweb.7z
+    cd /home/geneweb/ && 7z e geneweb.7z -y
 #RUN sh ./home/geneweb/geneweb/gwsetup -lang en -daemon
 
 EXPOSE 2316-2317
