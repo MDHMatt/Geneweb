@@ -15,7 +15,6 @@ RUN rm -rf /etc/update-motd.d /etc/motd /etc/motd.dynamic && ln -fs /dev/null /r
 #RUN useradd geneweb &&
 
 RUN mkdir /geneweb
-VOLUME /geneweb
 RUN cd geneweb && wget https://github.com/MDHMatt/Geneweb/raw/main/geneweb.7z && 7z x geneweb.7z -y && rm geneweb.7z && ls -slh
 
 #RUN chown -R geneweb:geneweb /home/geneweb
