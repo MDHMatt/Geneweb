@@ -29,5 +29,5 @@ EXPOSE 2316-2317
 EXPOSE 2322
 
 # Start watchdog and services
-RUN sh ./genweb.sh
+RUN sh ./geneweb/genweb.sh
 CMD /geneweb/
