@@ -12,29 +12,22 @@ RUN set -eux; \
 # Remove MOTD
 RUN rm -rf /etc/update-motd.d /etc/motd /etc/motd.dynamic && ln -fs /dev/null /run/motd.dynamic
 
-#RUN useradd geneweb &&
-
 RUN mkdir /geneweb
-#RUN cd geneweb && wget https://github.com/MDHMatt/Geneweb/raw/main/geneweb.7z && 7z x geneweb.7z -y && rm geneweb.7z && ls -slh
-
+#RUN useradd geneweb &&
 #RUN chown -R geneweb:geneweb /home/geneweb
 #USER geneweb:geneweb
-#RUN wget https://github.com/MDHMatt/Geneweb/blob/c8901ca2abe2f2d3d38dfb9fbf16ec61c425c44c/geneweb.sh && chmod +x geneweb.sh
 
-#RUN sh ./home/geneweb/gwsetup -lang en -daemon
-#CMD sh ./home/geneweb/gwd -daemon
-#CMD sh ./home/geneweb/geneweb.sh
-
-
+# Set container work dir
 WORKDIR /geneweb
 
+# Copy from repo, extract, set perms and remove archive.
 COPY /geneweb.7z /geneweb.sh /geneweb/
-RUN 7z x geneweb.7z -y && chmod +x geneweb.sh && rm geneweb.7z
+RUN 7z x geneweb.7z -y && chmod -R u=rwx,go=rx /geneweb && rm geneweb.7z
 
-
-#COPY /utilities /app/data/utilities
-
+# Open ports
 EXPOSE 2316-2317
 EXPOSE 2322
-#CMD sh ./genweb.sh
+
+# Start watchdog and services
+RUN sh ./genweb.sh
 CMD /geneweb/
