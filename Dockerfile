@@ -15,17 +15,26 @@ RUN rm -rf /etc/update-motd.d /etc/motd /etc/motd.dynamic && ln -fs /dev/null /r
 #RUN useradd geneweb &&
 
 RUN mkdir /geneweb
-RUN cd geneweb && wget https://github.com/MDHMatt/Geneweb/raw/main/geneweb.7z && 7z x geneweb.7z -y && rm geneweb.7z && ls -slh
+#RUN cd geneweb && wget https://github.com/MDHMatt/Geneweb/raw/main/geneweb.7z && 7z x geneweb.7z -y && rm geneweb.7z && ls -slh
 
 #RUN chown -R geneweb:geneweb /home/geneweb
 #USER geneweb:geneweb
-RUN wget https://github.com/MDHMatt/Geneweb/blob/c8901ca2abe2f2d3d38dfb9fbf16ec61c425c44c/geneweb.sh && chmod +x geneweb.sh
+#RUN wget https://github.com/MDHMatt/Geneweb/blob/c8901ca2abe2f2d3d38dfb9fbf16ec61c425c44c/geneweb.sh && chmod +x geneweb.sh
 
 #RUN sh ./home/geneweb/gwsetup -lang en -daemon
 #CMD sh ./home/geneweb/gwd -daemon
 #CMD sh ./home/geneweb/geneweb.sh
 
 
+WORKDIR /geneweb
+
+COPY /geneweb.7z /geneweb.sh /geneweb/
+RUN 7z x geneweb.7z -y && chmod +x geneweb.sh && rm geneweb.7z
+
+
+#COPY /utilities /app/data/utilities
+
 EXPOSE 2316-2317
 EXPOSE 2322
-CMD sh ./genweb.sh
+#CMD sh ./genweb.sh
+CMD /geneweb/
