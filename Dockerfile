@@ -6,7 +6,7 @@ RUN apk update && apk add m4 coreutils wget git p7zip nano bash dune opam perl-s
 
 # Setup build enviroment and Opam modules
 ARG OPAM_PACKAGES='camlp5 cppo dune jingoo markup ounit uucp uunf unidecode ocurl piqi piqilib redis redis-sync yojson calendars syslog'
-ENV OPAM_VERSION=4.11.1
+ENV OPAM_VERSION="4.11.1"
 
 RUN opam init -y --disable-sandboxing && \
  eval $(opam env) && opam update -a -y && \
