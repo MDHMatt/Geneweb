@@ -2,7 +2,7 @@ FROM alpine:latest
 LABEL maintainer="MDHMatt <dev@mdhosting.co.uk>"
 
 # Install required packages
-RUN apk update && apk add wget git p7zip nano bash dune opam perl-string-shellquote gcc make g++ zlib-dev
+RUN apk update && apk add wget git p7zip nano bash dune opam perl-string-shellquote gcc make g++ zlib-dev build-base
 
 # Setup build enviroment and Opam modules
 ARG OPAM_PACKAGES='camlp5 cppo dune jingoo markup ounit uucp uunf unidecode ocurl piqi piqilib redis redis-sync yojson calendars syslog'
