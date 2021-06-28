@@ -21,7 +21,8 @@ RUN mkdir /geneweb
 WORKDIR /geneweb
 
 # Copy from repo, extract, set perms and remove archive.
-COPY /geneweb.7z /geneweb.sh /geneweb/
+COPY ./geneweb.7z /geneweb/
+COPY ./geneweb.sh /geneweb/
 RUN 7z x geneweb.7z -y && chmod -R u=rwx,go=rx /geneweb && rm geneweb.7z
 
 # Open ports
@@ -29,5 +30,5 @@ EXPOSE 2316-2317
 EXPOSE 2322
 
 # Start watchdog and services
-RUN sh ./geneweb/genweb.sh
-CMD /geneweb/
+#RUN sh ./geneweb/genweb.sh
+ENTRYPOINT sh ./geneweb/genweb.sh
